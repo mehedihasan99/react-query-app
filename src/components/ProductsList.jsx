@@ -4,8 +4,9 @@ import axios from 'axios'
 import React from 'react'
 import Product from './Product'
 
-async function retrievedProduct() {
-  const response = await axios.get(`http://localhost:8000/products`)
+async function retrievedProduct({ queryKey }) {
+  console.log('queryKey', queryKey)
+  const response = await axios.get(`http://localhost:8000/${queryKey[0]}`)
 
   return response.data
 }
@@ -17,7 +18,9 @@ export default function ProductsList() {
   } = useQuery({
     queryKey: ['products'],
     queryFn: retrievedProduct,
+    refetchInterval: 1000,
   })
+
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error.message}</div>
   return (
