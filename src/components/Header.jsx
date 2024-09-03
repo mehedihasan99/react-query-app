@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Header() {
   return (
-    <header className="bg-gray-200 shadow fixed top-0 left-0 right-0 ">
+    <header className="bg-gray-200 shadow fixed top-0 left-0 right-0 z-10">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
         <div className="text-2xl font-bold text-blue-600">

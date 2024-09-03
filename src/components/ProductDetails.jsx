@@ -5,7 +5,7 @@ import { ProductContext } from '../context'
 
 const retrieveProduct = async ({ queryKey }) => {
   const response = await axios.get(
-    `http://localhost:8000/${queryKey[0]}/${queryKey[1]}`
+    `http://localhost:8000/${queryKey[0]}/${queryKey[1]?.productId}`
   )
   return response.data
 }
@@ -16,7 +16,7 @@ export default function ProductDetails() {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ['products', productId],
+    queryKey: ['products', { productId }],
     queryFn: retrieveProduct,
   })
   if (isLoading) return <div>Loading...</div>
