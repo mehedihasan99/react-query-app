@@ -6,7 +6,6 @@ import Product from './Product'
 
 async function retrievedProduct({ queryKey }) {
   const response = await axios.get(`http://localhost:8000/${queryKey[0]}`)
-
   return response.data
 }
 export default function ProductsList() {
@@ -17,11 +16,11 @@ export default function ProductsList() {
   } = useQuery({
     queryKey: ['products'],
     queryFn: retrievedProduct,
-    refetchInterval: 5000,
   })
 
   if (isLoading) return <div>Loading...</div>
   if (error) return <div>Error: {error.message}</div>
+
   return (
     <div>
       <h1 className="text-2xl text-center mt-8 font-semibold text-gray-600 ">

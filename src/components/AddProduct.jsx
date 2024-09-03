@@ -1,8 +1,10 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import React, { useState } from 'react'
+import { toast } from 'react-toastify'
 
 export default function AddProduct() {
+  const queryClient = useQueryClient()
   const [formData, setFormData] = useState({
     title: '',
     price: '',
@@ -19,27 +21,57 @@ export default function AddProduct() {
       [name]: value,
     })
   }
+
   const mutation = useMutation({
     mutationFn: (newProduct) => {
       return axios.post('http://localhost:8000/products', newProduct)
     },
+    onSuccess: (data, variables, context) => {
+      // console.log('data', data, variables, context)
+      queryClient.invalidateQueries(['products'])
+    },
+    // * onMutate run before the mutationFn
+    onMutate: () => {
+      return { greeting: 'hello mehedi' }
+    },
   })
+
   function handleSubmit(e) {
     e.preventDefault()
     mutation.mutate(formData)
-    console.log(formData)
     setFormData({
       title: '',
       price: '',
       description: '',
       thumbnail: '',
     })
+    toast.success('Product added successfully', {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    })
   }
+  if (mutation.isLoading) {
+    return <p className="text-center mt-8">Loading...</p>
+  }
+  if (mutation.isError) {
+    return (
+      <p className="text-center mt-8 text-red-500">
+        Error adding product: {mutation.error.message}
+      </p>
+    )
+  }
+
   return (
     <div className="w-56 h-full">
-      <h1 className="text-2xl text-center mt-8 font-semibold text-gray-600 ">
+      <h1 className="text-2xl text-center mt-8 font-semibold text-gray-600  ">
         Add Product
       </h1>
+
       <form
         onSubmit={handleSubmit}
         className="shadow-lg bg-gray-200 border-gray-100 rounded border-2 p-4 w-full hover:scale-105 transition-transform my-7"
