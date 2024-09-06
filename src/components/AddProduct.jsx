@@ -56,11 +56,11 @@ export default function AddProduct() {
     })
   }
   if (mutation.isLoading) {
-    return <p className="text-center mt-8">Loading...</p>
+    return <p className="text-center ">Loading...</p>
   }
   if (mutation.isError) {
     return (
-      <p className="text-center mt-8 text-red-500">
+      <p className="text-center  text-red-500">
         Error adding product: {mutation.error.message}
       </p>
     )
@@ -68,7 +68,7 @@ export default function AddProduct() {
 
   return (
     <div className="w-56 h-full">
-      <h1 className="text-2xl text-center mt-8 font-semibold text-gray-600  ">
+      <h1 className="text-2xl text-center  font-semibold text-gray-600  ">
         Add Product
       </h1>
 

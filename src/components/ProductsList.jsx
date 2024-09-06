@@ -27,7 +27,7 @@ export default function ProductsList() {
 
   return (
     <div>
-      <h1 className="text-2xl text-center mt-8 font-semibold text-gray-600 ">
+      <h1 className="text-2xl text-center  font-semibold text-gray-600 ">
         Product List
       </h1>
       {products.data && (
